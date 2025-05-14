@@ -51,12 +51,11 @@ class RaceMap:
         random.shuffle(self.order)
         self.dice = [dice12() for n in range(self.num_tuanzi)]
 
-    def run_match(self)->int:
+    def run_match(self) -> int:
         while True:
             out = self.run_round()
             if out != -1:
                 return out
-
 
     def run_round(self):
         self.roll_dice()
@@ -98,7 +97,7 @@ class RaceMap:
 # ======Tuanzi======
 # jinhsi
 def jinhsi_check(race_map, tuanzi_id):
-    if race_map.step[tuanzi_id] == 0: # 特殊情况刚起步
+    if race_map.step[tuanzi_id] == 0:  # 特殊情况刚起步
         return
     now_list = race_map.track[race_map.step[tuanzi_id]]
     pos = now_list.index(tuanzi_id)
@@ -109,12 +108,13 @@ def jinhsi_check(race_map, tuanzi_id):
         now_list.remove(tuanzi_id)
         now_list.append(tuanzi_id)
 
+
 jinhsi = Tuanzi("今汐", CheckChance.ROLL, jinhsi_check)
 
 
 # changli
 def changli_check(race_map, tuanzi_id):
-    if race_map.step[tuanzi_id] == 0: # 特殊情况刚起步
+    if race_map.step[tuanzi_id] == 0:  # 特殊情况刚起步
         return
     now_list = race_map.track[race_map.step[tuanzi_id]]
     pos = now_list.index(tuanzi_id)
@@ -124,6 +124,7 @@ def changli_check(race_map, tuanzi_id):
         log("长离发动技能")
         race_map.order.remove(tuanzi_id)
         race_map.order.append(tuanzi_id)
+
 
 changli = Tuanzi("长离", CheckChance.ROLL, changli_check)
 
@@ -139,6 +140,7 @@ def calcharo_check(race_map, tuanzi_id):
         log("卡卡罗发动技能")
         race_map.dice[tuanzi_id] += 3
 
+
 calcharo = Tuanzi("卡卡罗", CheckChance.ROLL, calcharo_check)
 
 
@@ -148,23 +150,26 @@ def shorekeeper_check(race_map, tuanzi_id):
         log("守岸人发动技能")
         race_map.dice[tuanzi_id] = random.randint(2, 3)
 
+
 shorekeeper = Tuanzi("守岸人", CheckChance.ROLL, shorekeeper_check)
 
 
 # camellya
 def camellya_check(race_map, tuanzi_id):
-    if race_map.step[tuanzi_id] == 0: # 特殊情况刚起步
+    if race_map.step[tuanzi_id] == 0:  # 特殊情况刚起步
         return
     if random.random() > 0.5:
         return
     log("椿发动技能")
     now_list = race_map.track[race_map.step[tuanzi_id]]
-    race_map.dice[tuanzi_id] += (len(now_list)-1)
+    race_map.dice[tuanzi_id] += (len(now_list) - 1)
     # 等效为移动到团子顶层
     now_list.remove(tuanzi_id)
     now_list.append(tuanzi_id)
 
+
 camellya = Tuanzi("椿", CheckChance.BEFORE_RUN, camellya_check)
+
 
 # carlotta
 def carlotta_check(race_map, tuanzi_id):
@@ -172,6 +177,7 @@ def carlotta_check(race_map, tuanzi_id):
         return
     log("土豆地雷发动技能")
     race_map.dice[tuanzi_id] *= 2
+
 
 carlotta = Tuanzi("柯莱塔", CheckChance.ROLL, carlotta_check)
 

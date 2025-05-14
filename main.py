@@ -6,11 +6,10 @@ if __name__ == "__main__":
                    tuanzi.calcharo,
                    tuanzi.shorekeeper,
                    tuanzi.camellya,
-                   tuanzi.carlotta
+                   tuanzi.carlotta,
                    ]
     score_list = [0 for i in range(len(tuanzi_list))]
-    num = 10000
-    print(score_list)
+    num = 100000
     for i in range(num):
         race_map = tuanzi.RaceMap(tuanzi_list)
         score_list[race_map.run_match()] += 1
