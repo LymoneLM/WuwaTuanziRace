@@ -9,7 +9,7 @@ def day1():
         tuanzi.camellya,
         tuanzi.carlotta,
     ]
-    score_list = [0 for i in range(len(tuanzi_list))]
+    score_list = [0 for _ in range(len(tuanzi_list))]
     num = 100000
     for i in range(num):
         race_map = tuanzi.RaceMap(tuanzi_list)
@@ -28,7 +28,7 @@ def day2():
         tuanzi.calcharo,
     ]
     rank = [0,1,1,2,2,3]
-    score_list = [0 for i in range(len(tuanzi_list))]
+    score_list = [0 for _ in range(len(tuanzi_list))]
     num = 100000
     for i in range(num):
         race_map = tuanzi.RaceMap(tuanzi_list, rank, 23+4)

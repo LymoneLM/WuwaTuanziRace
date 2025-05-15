@@ -2,8 +2,8 @@ import random
 from enum import Enum, auto
 
 
-def log(str):
-    print(f"[TuanziLog]{str}")
+def log(string):
+    print(f"[TuanziLog]{string}")
 
 
 class CheckChance(Enum):
@@ -42,12 +42,12 @@ class RaceMap:
         self.length = length
         # 生成
         self.num_tuanzi = len(tuanzi)
-        self.step = [0 for n in range(self.num_tuanzi)]
+        self.step = [0 for _ in range(self.num_tuanzi)]
         self.order = [n for n in range(self.num_tuanzi)]
-        self.track = [[] for n in range(self.length + self.num_tuanzi + 3)]
+        self.track = [[] for _ in range(self.length + self.num_tuanzi + 3)]
         for i in range(self.num_tuanzi):
             self.tuanzi[i].set_map(self, i)
-        self.dice = [0 for n in range(self.num_tuanzi)]
+        self.dice = [0 for _ in range(self.num_tuanzi)]
         self.roll_dice() # 第一骰
         # 处理初始位次
         if rank is None:
@@ -62,7 +62,7 @@ class RaceMap:
     def roll_dice(self):
         dice12 = lambda: random.randint(1, 3)
         random.shuffle(self.order)
-        self.dice = [dice12() for n in range(self.num_tuanzi)]
+        self.dice = [dice12() for _ in range(self.num_tuanzi)]
 
     def run_match(self) -> int:
         while True:
