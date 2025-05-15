@@ -24,7 +24,8 @@ class Tuanzi:
         self.tuanzi_id = tuanzi_id
 
     def check(self, now):
-        self.check_func(self.race_map, self.tuanzi_id)
+        if now == self.check_chance:
+            self.check_func(self.race_map, self.tuanzi_id)
 
 
 """Note
@@ -83,10 +84,6 @@ class RaceMap:
         return -1
 
     def move(self, tuanzi_id):
-        if self.step[tuanzi_id] == 0:
-            self.track[self.step[tuanzi_id] + self.dice[tuanzi_id]].append(tuanzi_id)
-            self.step[tuanzi_id] += self.dice[tuanzi_id]
-            return -1
         source = self.track[self.step[tuanzi_id]]
         diff_step = self.dice[tuanzi_id]
         target = self.track[self.step[tuanzi_id] + diff_step]
@@ -99,7 +96,7 @@ class RaceMap:
         return self.check_win(tuanzi_id)
 
     def check_win(self, tuanzi_id):
-        if self.step[tuanzi_id] >= self.length:
+        if self.step[tuanzi_id] < self.length:
             return -1
         winner_list = self.track[self.step[tuanzi_id]]
         winner = winner_list.pop()
