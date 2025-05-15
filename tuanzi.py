@@ -63,12 +63,12 @@ class RaceMap:
         dice12 = lambda: random.randint(1, 3)
         random.shuffle(self.order)
         self.dice = [dice12() for n in range(self.num_tuanzi)]
-        print("dice:",self.dice)
 
     def run_match(self) -> int:
         while True:
             out = self.run_round()
             if out != -1:
+                log(f"{self.tuanzi[out].name}获胜")
                 return out
 
     def run_round(self):
@@ -88,10 +88,10 @@ class RaceMap:
         diff_step = self.dice[tuanzi_id]
         target = self.track[self.step[tuanzi_id] + diff_step]
         current = source.index(tuanzi_id)
-        n = len(source) - (current + 1)
+        n = len(source) - current
         for i in range(n):
             tuanzi = source.pop(current)
-            self.step[tuanzi] += diff_step
+            self.step[tuanzi] = self.step[tuanzi] + diff_step
             target.append(tuanzi)
         return self.check_win(tuanzi_id)
 
@@ -100,7 +100,6 @@ class RaceMap:
             return -1
         winner_list = self.track[self.step[tuanzi_id]]
         winner = winner_list.pop()
-        log(f"{self.tuanzi[winner].name}获胜")
         return winner
 
 

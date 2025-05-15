@@ -1,13 +1,14 @@
 import tuanzi
 
 def day1():
-    tuanzi_list = [tuanzi.jinhsi,
-                   tuanzi.changli,
-                   tuanzi.calcharo,
-                   tuanzi.shorekeeper,
-                   tuanzi.camellya,
-                   tuanzi.carlotta,
-                   ]
+    tuanzi_list = [
+        tuanzi.jinhsi,
+        tuanzi.changli,
+        tuanzi.calcharo,
+        tuanzi.shorekeeper,
+        tuanzi.camellya,
+        tuanzi.carlotta,
+    ]
     score_list = [0 for i in range(len(tuanzi_list))]
     num = 100000
     for i in range(num):
@@ -28,7 +29,7 @@ def day2():
     ]
     rank = [0,1,1,2,2,3]
     score_list = [0 for i in range(len(tuanzi_list))]
-    num = 10
+    num = 100000
     for i in range(num):
         race_map = tuanzi.RaceMap(tuanzi_list, rank, 23+4)
         score_list[race_map.run_match()] += 1
