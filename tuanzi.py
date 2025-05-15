@@ -35,21 +35,34 @@ class Tuanzi:
 
 
 class RaceMap:
-    def __init__(self, tuanzi: list[Tuanzi], length=23):
+    def __init__(self, tuanzi: list[Tuanzi], rank:list[int]=None, length=23):
+        # 转存
         self.tuanzi = tuanzi
-        self.num_tuanzi = len(tuanzi)
-        self.order = [n for n in range(self.num_tuanzi)]
-        self.dice = [0 for n in range(self.num_tuanzi)]
-        self.step = [0 for n in range(self.num_tuanzi)]
         self.length = length
-        self.track = [[] for n in range(self.length * 2)]
+        # 生成
+        self.num_tuanzi = len(tuanzi)
+        self.step = [0 for n in range(self.num_tuanzi)]
+        self.order = [n for n in range(self.num_tuanzi)]
+        self.track = [[] for n in range(self.length + self.num_tuanzi + 3)]
         for i in range(self.num_tuanzi):
             self.tuanzi[i].set_map(self, i)
+        self.dice = [0 for n in range(self.num_tuanzi)]
+        self.roll_dice() # 第一骰
+        # 处理初始位次
+        if rank is None:
+            for i in range(self.num_tuanzi):
+                self.track[0].append(self.order[i])
+        else:
+            for i in range(self.num_tuanzi):
+                self.step[i] = rank[i]
+                self.track[rank[i]].append(i)
+
 
     def roll_dice(self):
         dice12 = lambda: random.randint(1, 3)
         random.shuffle(self.order)
         self.dice = [dice12() for n in range(self.num_tuanzi)]
+        print("dice:",self.dice)
 
     def run_match(self) -> int:
         while True:
@@ -58,7 +71,6 @@ class RaceMap:
                 return out
 
     def run_round(self):
-        self.roll_dice()
         for n in self.tuanzi:
             n.check(CheckChance.ROLL)
         for n in range(len(self.order)):
@@ -67,6 +79,7 @@ class RaceMap:
             out = self.move(self.order[n])
             if out != -1:
                 return out
+        self.roll_dice() # 后置Roll点以适应不同起点
         return -1
 
     def move(self, tuanzi_id):
@@ -97,8 +110,6 @@ class RaceMap:
 # ======Tuanzi======
 # jinhsi
 def jinhsi_check(race_map, tuanzi_id):
-    if race_map.step[tuanzi_id] == 0:  # 特殊情况刚起步
-        return
     now_list = race_map.track[race_map.step[tuanzi_id]]
     pos = now_list.index(tuanzi_id)
     if pos + 1 != len(now_list):  # 不在最顶
@@ -114,8 +125,6 @@ jinhsi = Tuanzi("今汐", CheckChance.ROLL, jinhsi_check)
 
 # changli
 def changli_check(race_map, tuanzi_id):
-    if race_map.step[tuanzi_id] == 0:  # 特殊情况刚起步
-        return
     now_list = race_map.track[race_map.step[tuanzi_id]]
     pos = now_list.index(tuanzi_id)
     if len(now_list) != 1 and pos != 0:
@@ -156,8 +165,6 @@ shorekeeper = Tuanzi("守岸人", CheckChance.ROLL, shorekeeper_check)
 
 # camellya
 def camellya_check(race_map, tuanzi_id):
-    if race_map.step[tuanzi_id] == 0:  # 特殊情况刚起步
-        return
     if random.random() > 0.5:
         return
     log("椿发动技能")
