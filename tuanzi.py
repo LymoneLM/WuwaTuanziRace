@@ -41,6 +41,7 @@ class RaceMap:
         self.tuanzi = tuanzi
         self.length = length
         # 生成
+        self.flag = []
         self.num_tuanzi = len(tuanzi)
         self.step = [0 for _ in range(self.num_tuanzi)]
         self.order = [n for n in range(self.num_tuanzi)]
@@ -67,6 +68,7 @@ class RaceMap:
     def run_match(self) -> int:
         while True:
             out = self.run_round()
+            self.roll_dice()  # 后置Roll点以适应不同起点
             if out != -1:
                 log(f"{self.tuanzi[out].name}获胜")
                 return out
@@ -80,7 +82,6 @@ class RaceMap:
             out = self.move(self.order[n])
             if out != -1:
                 return out
-        self.roll_dice() # 后置Roll点以适应不同起点
         return -1
 
     def move(self, tuanzi_id):
@@ -91,7 +92,7 @@ class RaceMap:
         n = len(source) - current
         for i in range(n):
             tuanzi = source.pop(current)
-            self.step[tuanzi] = self.step[tuanzi] + diff_step
+            self.step[tuanzi] += diff_step
             target.append(tuanzi)
         return self.check_win(tuanzi_id)
 
@@ -184,6 +185,85 @@ def carlotta_check(race_map, tuanzi_id):
 
 carlotta = Tuanzi("柯莱塔", CheckChance.ROLL, carlotta_check)
 
+# roccia
+def roccia_check(race_map, tuanzi_id):
+    if race_map.order[race_map.num_tuanzi - 1] == tuanzi_id:
+        race_map.dice[tuanzi_id] += 2
+        log("洛可可发动技能")
+
+
+roccia = Tuanzi("洛可可", CheckChance.BEFORE_RUN, roccia_check)
+
+
+# brant
+def brant_check(race_map, tuanzi_id):
+    if race_map.order[0] == tuanzi_id:
+        race_map.dice[tuanzi_id] += 2
+        log("布兰特发动技能")
+
+
+brant = Tuanzi("布兰特", CheckChance.BEFORE_RUN, brant_check)
+
+# cantarella
+def cantarella_check(race_map, tuanzi_id):
+    if "cantarella" in race_map.flag:
+        return
+    diff = race_map.dice[tuanzi_id]
+    for i in range(1, diff+1):
+        if race_map.track[race_map.step[tuanzi_id]+i] is not None:
+            log("坎大雷发动技能")
+            race_map.dice[tuanzi_id] = diff
+            race_map.flag.append("cantarella")
+
+
+cantarella = Tuanzi("坎特雷拉", CheckChance.BEFORE_RUN, cantarella_check)
+
+
+# zani
+def zani_check(race_map, tuanzi_id):
+    # 技能1
+    if race_map.dice[tuanzi_id] == 2:
+        race_map.dice[tuanzi_id] += 1 if random.random()>0.5 else -1
+    # 技能2
+    if "zani" in race_map.flag:
+        if random.random() <= 0.4:
+            log("赞妮发动技能")
+            race_map.dice[tuanzi_id] += 2
+    if race_map.track[race_map.step[tuanzi_id]] is not None:
+        race_map.flag.append("zani")
+
+
+zani = Tuanzi("赞妮", CheckChance.BEFORE_RUN, zani_check)
+
+# cartethyia
+# 某些人的机制能不能不要这么复杂啊！学学菲比好不好
+def cartethyia_check(race_map, tuanzi_id):
+    if "cartethyia" in race_map.flag:
+        if random.random() <= 0.6:
+            log("卡提希娅发动技能")
+            race_map.dice[tuanzi_id] += 2
+    else:
+        # 模拟本次移动，以免卡提有两个判定函数
+        # 现有赛道机制，移动后触发无法影响下一回合移动点数
+        diff = race_map.dice[tuanzi_id]
+        cp_step = race_map.step.copy()
+        cp_step[tuanzi_id] += diff
+        if min(cp_step) == cp_step[tuanzi_id]:
+            # 堆叠的情况，最下层是最后一名，显然后来者不会在最下
+            if cp_step.count(cp_step[tuanzi_id]) == 1:
+                log("卡提希娅启动超级变换形态")
+                race_map.flag.append("cartethyia")
+
+
+cartethyia = Tuanzi("卡提希娅", CheckChance.BEFORE_RUN, cartethyia_check)
+
+# phoebe
+def phoebe_check(race_map, tuanzi_id):
+    if random.random() <= 0.5:
+        log("菲比发动技能")
+        race_map.dice[tuanzi_id] += 1
+
+phoebe = Tuanzi("菲比", CheckChance.ROLL, phoebe_check)
 # ======Test======
 if __name__ == "__main__":
     print("直接运行tuanzi.py是无效的，请运行main.py")
