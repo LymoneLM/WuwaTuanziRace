@@ -36,7 +36,7 @@ class Tuanzi:
 
 
 class RaceMap:
-    def __init__(self, tuanzi: list[Tuanzi], rank:list[int]=None, length=23):
+    def __init__(self, tuanzi: list[Tuanzi], rank: list[int] = None, length=23):
         # 转存
         self.tuanzi = tuanzi
         self.length = length
@@ -49,7 +49,7 @@ class RaceMap:
         for i in range(self.num_tuanzi):
             self.tuanzi[i].set_map(self, i)
         self.dice = [0 for _ in range(self.num_tuanzi)]
-        self.roll_dice() # 第一骰
+        self.roll_dice()  # 第一骰
         # 处理初始位次
         if rank is None:
             for i in range(self.num_tuanzi):
@@ -58,7 +58,6 @@ class RaceMap:
             for i in range(self.num_tuanzi):
                 self.step[i] = rank[i]
                 self.track[rank[i]].append(i)
-
 
     def roll_dice(self):
         dice12 = lambda: random.randint(1, 3)
@@ -185,6 +184,7 @@ def carlotta_check(race_map, tuanzi_id):
 
 carlotta = Tuanzi("柯莱塔", CheckChance.ROLL, carlotta_check)
 
+
 # roccia
 def roccia_check(race_map, tuanzi_id):
     if race_map.order[race_map.num_tuanzi - 1] == tuanzi_id:
@@ -204,13 +204,14 @@ def brant_check(race_map, tuanzi_id):
 
 brant = Tuanzi("布兰特", CheckChance.BEFORE_RUN, brant_check)
 
+
 # cantarella
 def cantarella_check(race_map, tuanzi_id):
     if "cantarella" in race_map.flag:
         return
     diff = race_map.dice[tuanzi_id]
-    for i in range(1, diff+1):
-        if race_map.track[race_map.step[tuanzi_id]+i]:
+    for i in range(1, diff + 1):
+        if race_map.track[race_map.step[tuanzi_id] + i]:
             log("坎大雷发动技能")
             race_map.dice[tuanzi_id] = diff
             race_map.flag.append("cantarella")
@@ -224,7 +225,7 @@ cantarella = Tuanzi("坎特雷拉", CheckChance.BEFORE_RUN, cantarella_check)
 def zani_check(race_map, tuanzi_id):
     # 技能1
     if race_map.dice[tuanzi_id] == 2:
-        race_map.dice[tuanzi_id] += 1 if random.random()>0.5 else -1
+        race_map.dice[tuanzi_id] += 1 if random.random() > 0.5 else -1
     # 技能2
     if "zani" in race_map.flag:
         race_map.flag.remove("zani")
@@ -236,6 +237,7 @@ def zani_check(race_map, tuanzi_id):
 
 
 zani = Tuanzi("赞妮", CheckChance.BEFORE_RUN, zani_check)
+
 
 # cartethyia
 # 某些人的机制能不能不要这么复杂啊！学学菲比好不好
@@ -258,11 +260,13 @@ def cartethyia_check(race_map, tuanzi_id):
 
 cartethyia = Tuanzi("卡提希娅", CheckChance.BEFORE_RUN, cartethyia_check)
 
+
 # phoebe
 def phoebe_check(race_map, tuanzi_id):
     if random.random() <= 0.5:
         log("菲比发动技能")
         race_map.dice[tuanzi_id] += 1
+
 
 phoebe = Tuanzi("菲比", CheckChance.ROLL, phoebe_check)
 # ======Test======
