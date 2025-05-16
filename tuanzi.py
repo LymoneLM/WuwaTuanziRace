@@ -214,6 +214,7 @@ def cantarella_check(race_map, tuanzi_id):
             log("坎大雷发动技能")
             race_map.dice[tuanzi_id] = diff
             race_map.flag.append("cantarella")
+            break
 
 
 cantarella = Tuanzi("坎特雷拉", CheckChance.BEFORE_RUN, cantarella_check)
@@ -226,6 +227,7 @@ def zani_check(race_map, tuanzi_id):
         race_map.dice[tuanzi_id] += 1 if random.random()>0.5 else -1
     # 技能2
     if "zani" in race_map.flag:
+        race_map.flag.remove("zani")
         if random.random() <= 0.4:
             log("赞妮发动技能")
             race_map.dice[tuanzi_id] += 2
@@ -243,8 +245,7 @@ def cartethyia_check(race_map, tuanzi_id):
             log("卡提希娅发动技能")
             race_map.dice[tuanzi_id] += 2
     else:
-        # 模拟本次移动，以免卡提有两个判定函数
-        # 现有赛道机制，移动后触发无法影响下一回合移动点数
+        # 模拟本次移动，以免卡提有两个不同时机的判定函数
         diff = race_map.dice[tuanzi_id]
         cp_step = race_map.step.copy()
         cp_step[tuanzi_id] += diff
