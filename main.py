@@ -15,6 +15,7 @@ def run(tuanzi_list, **kw):
         race_map = tuanzi.RaceMap(tuanzi_list, rank, length)
         score_list[race_map.run_match()] += 1
         print(score_list)
+    print(f"{rounds}回合模拟团子胜率：")
     for i in range(len(tuanzi_list)):
         print(f"{tuanzi_list[i].name:<4}\t: {score_list[i] / rounds:.2%}")
 
