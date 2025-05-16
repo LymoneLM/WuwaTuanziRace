@@ -210,7 +210,7 @@ def cantarella_check(race_map, tuanzi_id):
         return
     diff = race_map.dice[tuanzi_id]
     for i in range(1, diff+1):
-        if race_map.track[race_map.step[tuanzi_id]+i] is not None:
+        if race_map.track[race_map.step[tuanzi_id]+i]:
             log("坎大雷发动技能")
             race_map.dice[tuanzi_id] = diff
             race_map.flag.append("cantarella")
@@ -231,7 +231,7 @@ def zani_check(race_map, tuanzi_id):
         if random.random() <= 0.4:
             log("赞妮发动技能")
             race_map.dice[tuanzi_id] += 2
-    if race_map.track[race_map.step[tuanzi_id]] is not None:
+    if len(race_map.track[race_map.step[tuanzi_id]]) > 1:
         race_map.flag.append("zani")
 
 
