@@ -187,7 +187,7 @@ carlotta = Tuanzi("柯莱塔", CheckChance.ROLL, carlotta_check)
 
 # roccia
 def roccia_check(race_map, tuanzi_id):
-    if race_map.order[race_map.num_tuanzi - 1] == tuanzi_id:
+    if race_map.order[-1] == tuanzi_id:
         race_map.dice[tuanzi_id] += 2
         log("洛可可发动技能")
 
