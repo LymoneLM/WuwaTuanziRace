@@ -137,13 +137,10 @@ changli = Tuanzi("长离", CheckChance.ROLL, changli_check)
 # calcharo
 def calcharo_check(race_map, tuanzi_id):
     step = race_map.step[tuanzi_id]
-    flag = True
-    for s in race_map.step:
-        if s < step:
-            flag = False
-    if flag:
-        log("卡卡罗发动技能")
-        race_map.dice[tuanzi_id] += 3
+    if step == min(race_map.step):
+        if race_map.track[step][0] == tuanzi_id:
+            log("卡卡罗发动技能")
+            race_map.dice[tuanzi_id] += 3
 
 
 calcharo = Tuanzi("卡卡罗", CheckChance.ROLL, calcharo_check)
