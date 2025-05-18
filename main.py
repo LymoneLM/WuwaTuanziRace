@@ -79,6 +79,17 @@ def day5():
     run(tuanzi_list)
 
 
+def day6():
+    tuanzi_list = [
+        tuanzi.shorekeeper,
+        tuanzi.jinhsi,
+        tuanzi.calcharo,
+        tuanzi.changli,
+    ]
+    rank = [0, 1, 2, 3]
+    run(tuanzi_list)
+
+
 
 if __name__ == "__main__":
-    day5()
+    day6()
