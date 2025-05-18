@@ -87,7 +87,7 @@ def day6():
         tuanzi.changli,
     ]
     rank = [0, 1, 2, 3]
-    run(tuanzi_list)
+    run(tuanzi_list, rank=rank, length=23+4)
 
 
 
