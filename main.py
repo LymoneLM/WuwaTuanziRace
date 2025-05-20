@@ -90,6 +90,26 @@ def day6():
     run(tuanzi_list, rank=rank, length=23+4)
 
 
+def day7():
+    tuanzi_list = [
+        tuanzi.roccia,
+        tuanzi.brant,
+        tuanzi.zani,
+        tuanzi.phoebe,
+    ]
+    run(tuanzi_list)
+
+
+def day8():
+    tuanzi_list = [
+        tuanzi.roccia,
+        tuanzi.brant,
+        tuanzi.phoebe,
+        tuanzi.zani,
+    ]
+    rank = [0, 1, 2, 3]
+    run(tuanzi_list, rank=rank, length=23 + 4)
+
 
 if __name__ == "__main__":
-    day6()
+    day8()
