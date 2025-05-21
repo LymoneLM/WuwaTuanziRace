@@ -1,3 +1,4 @@
+import sys
 import tuanzi
 
 
@@ -19,6 +20,7 @@ def run(tuanzi_list, **kw):
     for i in range(len(tuanzi_list)):
         print(f"{tuanzi_list[i].name:<4}\t: {score_list[i] / rounds:.2%}")
 
+
 def day1():
     tuanzi_list = [
         tuanzi.jinhsi,
@@ -28,7 +30,7 @@ def day1():
         tuanzi.camellya,
         tuanzi.carlotta,
     ]
-    run(tuanzi_list)
+    return tuanzi_list, run(tuanzi_list)
 
 
 def day2():
@@ -41,7 +43,7 @@ def day2():
         tuanzi.calcharo,
     ]
     rank = [0, 1, 1, 2, 2, 3]
-    run(tuanzi_list, rank=rank, length=23+4)
+    return tuanzi_list, run(tuanzi_list, rank=rank, length=23+4)
 
 
 def day3():
@@ -53,7 +55,7 @@ def day3():
         tuanzi.cartethyia,
         tuanzi.phoebe,
     ]
-    run(tuanzi_list)
+    return tuanzi_list, run(tuanzi_list)
 
 
 def day4():
@@ -66,7 +68,7 @@ def day4():
         tuanzi.cantarella,
     ]
     rank = [0, 1, 1, 2, 2, 3]
-    run(tuanzi_list, rank=rank, length=23+4)
+    return tuanzi_list, run(tuanzi_list, rank=rank, length=23+4)
 
 
 def day5():
@@ -76,7 +78,7 @@ def day5():
         tuanzi.calcharo,
         tuanzi.shorekeeper,
     ]
-    run(tuanzi_list)
+    return tuanzi_list, run(tuanzi_list)
 
 
 def day6():
@@ -87,7 +89,7 @@ def day6():
         tuanzi.changli,
     ]
     rank = [0, 1, 2, 3]
-    run(tuanzi_list, rank=rank, length=23+4)
+    return tuanzi_list, run(tuanzi_list, rank=rank, length=23+4)
 
 
 def day7():
@@ -97,7 +99,7 @@ def day7():
         tuanzi.zani,
         tuanzi.phoebe,
     ]
-    run(tuanzi_list)
+    return tuanzi_list, run(tuanzi_list)
 
 
 def day8():
@@ -108,8 +110,69 @@ def day8():
         tuanzi.zani,
     ]
     rank = [0, 1, 2, 3]
-    run(tuanzi_list, rank=rank, length=23 + 4)
+    return tuanzi_list, run(tuanzi_list, rank=rank, length=23 + 4)
 
+def day9():
+    tuanzi_list = [
+        tuanzi.shorekeeper,
+        tuanzi.calcharo,
+        tuanzi.brant,
+        tuanzi.zani,
+    ]
+    return tuanzi_list, run(tuanzi_list)
+
+
+def repechage():
+    tuanzi_list = [
+        tuanzi.camellya,
+        tuanzi.carlotta,
+        tuanzi.jinhsi,
+        tuanzi.changli,
+        tuanzi.cantarella,
+        tuanzi.cartethyia,
+        tuanzi.phoebe,
+        tuanzi.roccia,
+    ]
+    run(tuanzi_list)
+
+
+def repechage_a():
+    tuanzi_list = [
+        tuanzi.camellya,
+        tuanzi.carlotta,
+        tuanzi.jinhsi,
+        tuanzi.changli,
+
+    ]
+    run(tuanzi_list)
+
+
+def repechage_b():
+    tuanzi_list = [
+        tuanzi.cantarella,
+        tuanzi.cartethyia,
+        tuanzi.phoebe,
+        tuanzi.roccia,
+    ]
+    run(tuanzi_list)
+
+
+def all():
+    tuanzi_list = [
+        tuanzi.jinhsi,
+        tuanzi.changli,
+        tuanzi.calcharo,
+        tuanzi.shorekeeper,
+        tuanzi.camellya,
+        tuanzi.carlotta,
+        tuanzi.roccia,
+        tuanzi.brant,
+        tuanzi.cantarella,
+        tuanzi.zani,
+        tuanzi.cartethyia,
+        tuanzi.phoebe,
+    ]
+    run(tuanzi_list,length=47)
 
 if __name__ == "__main__":
-    day8()
+    all()
