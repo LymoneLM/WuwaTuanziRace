@@ -1,8 +1,8 @@
 import sys
-import tuanzi
+import tuanzis as tuanzi
 
 
-rounds = 100000
+rounds = 1000000
 
 def run(tuanzi_list, **kw):
     rank = None
@@ -15,8 +15,8 @@ def run(tuanzi_list, **kw):
     for i in range(rounds):
         race_map = tuanzi.RaceMap(tuanzi_list, rank, length)
         score_list[race_map.run_match()] += 1
-        print(score_list)
-    print(f"{rounds}回合模拟团子胜率：")
+    print(score_list)
+    print(f"模拟{rounds}回合，团子胜率如下：")
     for i in range(len(tuanzi_list)):
         print(f"{tuanzi_list[i].name:<4}\t: {score_list[i] / rounds:.2%}")
 
@@ -175,4 +175,4 @@ def all():
     run(tuanzi_list,length=47)
 
 if __name__ == "__main__":
-    all()
+    day9()
